@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <style type="text/css" media="screen">
+        body{
+            background-color:#f5f5f5;
+            font-size:0.7rem;
+        }
+        .aui-bar-nav{
+            color:black;
+        }
+        #title{
+            width: 100%;
+            height:2rem;
+            text-align: center;
+            font-weight:bold;
+            line-height:2rem;
+            font-size:0.85rem;
+            margin-top:1rem;
+            background-color:#f5f5f5;
+            border:none;
+        }
+        #amout{
+            width: 100%;
+            height:1rem;
+            text-align: center;
+            font-size:0.9rem;
+            line-height:1rem;
+            padding-bottom:3rem;
+            background-color:#f5f5f5;
+            /* border-bottom:0.01rem solid #000; */
+        }
+        .aui-list .aui-list-item{
+            border: none;
+            border: 0rem solid #fff;
+            min-height:1.5rem;
+            height:1.5rem;
+            line-height:1.5rem;
+            background-color:#f5f5f5;
+        }
+        .aui-col-xs-6{
+          border-bottom:0.03rem solid #ddd;
+        }
+        .aui-grid [class*=aui-col-]{
+            padding:0.5rem 1.8rem;
+        }
+        .aui-margin-b-15 {
+            margin-bottom: 0rem !important;
+        }
+        .aui-list-item-arrow:before {
+            right: 1.95rem;
+            border: 1px solid #bdbdbd;
+            border-top: none;
+            border-right: none;
+        }
+        .aui-btn-info{
+          width: 10rem;
+          padding: 0.4rem 0;
+          margin-top:5rem;
+          position:relative;
+          left: 50%;
+          margin-left:-5rem;
+        }
+        .aui-list:before,.aui-list:after{
+          height: 0px;
+          background-color: #fff;
+        }
+        .aui-row .cont{
+         /*  text-align:left;
+          text-indent:10px; */
+        }
+        .aui-row .text{
+          text-align:right;
+        }
+    </style>
+
+</head>
+
+<body>
+   <header class="aui-bar aui-bar-nav">
+       <a class="aui-pull-left aui-btn">
+           <span class="aui-iconfont aui-icon-left" onclick="back2()"></span>
+       </a>
+       <div class="aui-title">还款确认</div>
+      
+   </header>
+   <div id="title">待还款总额（元）</div>
+   <div id="amout TotalAmt">1702.76</div>
+  
+   <section class="aui-grid aui-margin-b-15">
+       <div class="aui-row">
+           <div class="aui-col-xs-6 cont">还款账号：</div>
+           <div class="aui-col-xs-6 text">尾号8888</div>
+       </div>
+   </section>
+   <section class="aui-grid aui-margin-b-15">
+      <div class="aui-row">
+          <div class="aui-col-xs-6 cont">还款本金（元）：</div>
+          <div class="aui-col-xs-6 text Amt">8888.88</div>
+      </div> 
+       <div class="aui-row">
+           <div class="aui-col-xs-6 cont">利息（元）：</div>
+           <div class="aui-col-xs-6 text lixi">45.44</div>
+       </div>
+       <div class="aui-row">
+           <div class="aui-col-xs-6 cont">逾期罚息（元）：</div>
+           <div class="aui-col-xs-6 text faxi">8.9</div>
+       </div>
+   </section>
+   
+    <p>
+      <div class="aui-btn aui-btn-info" onclick="location='./relut.html'">确认还款</div>
+    </p>
+   
+</body>
+
+</html>
+<script type="lib/jquery.min.js"></script>
+<!-- <script src="../js/dropload.min.js"></script> -->
+<script >
+  //立即还款
+  function Repayment(){ 
+      var data3={
+          contrNbr:"",  //合同号
+          cooperatorId:"20000211", //合作方
+          calcType:"", //试算类型
+          calcTerm:"", //试算类型选择D时必传
+          calcDate:"",//试算日期 yyyymmdd格式
+          applyNo:"" //申请件编码
+      };
+      $.ajax({
+          url:ctx+"frsd/RepaymentCalc.html",
+          type:"post",
+          dataType:"json",
+          data:JSON.stringify(data3),
+          success:function(res){ 
+              if (res.STATUS==1&&res.result){   
+                  var amount=res.result.amount;   //结清金额   
+                  var pastPrin=res.result.pastPrin;   //已过还款本金
+                  var pastInt=res.result.pastInt;   //已入账利息
+                  var pastPenalty=res.result.pastPenalty;   //已入账罚息 
+                   
+                  $("#TotalAmt").html(amount);
+                  $(".Amt").html(pastPrin);
+                  $(".lixi").html(pastInt);
+                  $(".faxi").html(pastPenalty);
+  
+              }
+
+          }
+      }); 
+  }
+
+</script>

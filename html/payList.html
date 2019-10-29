@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <style type="text/css" media="screen">
+        body{
+          background-color:#f5f5f5;
+          font-size:0.7rem;
+        }
+        .aui-bar-nav{
+          color:black;
+        }
+        #title{
+          width: 100%;
+          height:2rem;
+          font-weight:bold;
+          text-align: center;
+          line-height:2rem;
+          font-size:0.85rem;
+          background-color:#f5f5f5;
+          border:none;
+        }
+        .aui-list .aui-list-item{
+          border: none;
+          border: 0rem solid #fff;
+          min-height:1.5rem;
+          height:1.5rem;
+          line-height:1.5rem;
+          background-color:#f5f5f5;
+          padding-left:1.2rem;
+        }
+        .aui-col-xs-4{
+          border-bottom:0.03rem solid #ddd;
+        }
+        .aui-col-xs-4 span{
+          width: 1rem;
+          height:1rem;
+          display: inline-block;
+          color:#ddd;
+        }
+        .aui-col-xs-4 input{
+          position: relative;
+          left:-1.3rem;
+        }
+        .aui-grid [class*=aui-col-]{
+          padding:0.5rem;
+        }
+        .aui-margin-b-15 {
+          margin-bottom: 0rem !important;
+        }
+        .aui-list-item-arrow:before {
+          right: 1.95rem;
+          border: 1px solid #bdbdbd;
+          border-top: none;
+          border-right: none;
+        }
+        .content{
+          width: 100%;
+          padding:1rem 1rem 3rem;
+        }
+        .btn{
+          width: 100%;
+          padding:1rem 2.5rem;
+          overflow:hidden;
+        }
+        .aui-btn-sm{
+          width: 6rem;
+          float: left;
+          color:#000 !important;
+        }
+        .right{
+          width: 6rem;
+          padding: 0.4rem 0;
+          float: right;
+        }
+        .context{
+          border: none;
+          font-size:0.7rem;
+          margin-bottom:0.8rem;
+        }
+        .aui-list:before,.aui-list:after{
+          height: 0px;
+          background-color: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+   <header class="aui-bar aui-bar-nav">
+       <a class="aui-pull-left aui-btn">
+           <span class="aui-iconfont aui-icon-left" onclick="back()"></span>
+       </a>
+       <div class="aui-title">还款计划详情</div>
+      
+   </header>
+   <div id="title">凡荣闪贷</div>
+   <div class="aui-content aui-margin-b-15 context">
+       <ul class="aui-list aui-list-in context">
+           <li class="aui-list-item">
+                <div>还款方式：等额本息</div>
+           </li>
+           <li class="aui-list-item">
+                <div class="amout11">借款本金：5000</div>
+           </li>
+           <li class="aui-list-item">
+                <div>借据编号：1234567</div>
+           </li>
+       </ul>
+   </div>
+   <section class="aui-grid aui-margin-b-15">
+       <div class="aui-row">
+           <div class="aui-col-xs-4">还款期数</div>
+           <div class="aui-col-xs-4">还款金额</div>
+           <div class="aui-col-xs-4">还款日期</div>
+       </div>
+   </section>
+   <section class="aui-grid aui-margin-b-15 details">
+       <div class="aui-row">
+           <div class="aui-col-xs-4"><input type="checkbox" >1/3</div>
+           <div class="aui-col-xs-4">1234.23</div>
+           <div class="aui-col-xs-4">已逾期18天</div>
+       </div>
+     <!--   <div class="aui-row">
+           <div class="aui-col-xs-4"><input type="checkbox" >2/3</div>
+           <div class="aui-col-xs-4">1234.23</div>
+           <div class="aui-col-xs-4">已逾期18天</div>
+       </div>
+       <div class="aui-row">
+           <div class="aui-col-xs-4"><input type="checkbox">3/3</div>
+           <div class="aui-col-xs-4">1234.23</div>
+           <div class="aui-col-xs-4">已逾期18天</div>
+       </div> -->
+   </section>
+   <div class="content">
+       温馨提示：每月还款日12:00、18:00将从您的账户自动扣款，请保证余额充足。
+   </div>
+   <div class="btn">
+    <p>
+        <div class="aui-btn aui-btn-info aui-btn-block aui-btn-outlined aui-btn-sm" onclick="allRepayment()">全额还款</div>
+    </p>
+    <p><div class="aui-btn aui-btn-info right" onclick="repayment()">立即还款</div></p>
+   </div>
+   
+</body>
+
+</html>
+<script src="../lib/jquery.min.js"></script>
+<!-- <script src="../js/dropload.min.js"></script> -->
+<script src="../js/payList.js"></script>
+<script>
+//全部还款
+  function allRepayment1(){ 
+      var data3={
+          contrNbr:"",  //合同号
+          cooperatorId:"20000211", //合作方
+          calcType:"", //试算类型
+          calcTerm:"", //试算类型选择D时必传
+          calcDate:"",//试算日期 yyyymmdd格式
+          applyNo:"" //申请件编码
+      };
+      $.ajax({
+          url:ctx+"frsd/RepaymentCalc.html",
+          type:"post",
+          dataType:"json",
+          data:JSON.stringify(data3),
+          success:function(res){ 
+              if (res.STATUS==1&&res.result){   
+                  var amount=res.result.amount;   //结清金额   
+                  var pastPrin=res.result.pastPrin;   //已过还款本金
+                  var pastInt=res.result.pastInt;   //已入账利息
+                  var pastPenalty=res.result.pastPenalty;   //已入账罚息
+                 
+                   
+                  $(".details").html(str);
+                  $("#amout11").html("借款本金"+initRepayTotalAmt);
+
+              }
+
+          }
+      }); 
+  }
+</script>

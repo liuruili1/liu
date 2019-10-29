@@ -1,0 +1,16 @@
+@charset'utf-8';
+*{margin: 0;padding: 0;}
+html{font-size: 14px;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+body{font:16px/1.4 'Pingfang SC', 'Heiti SC', 'Microsoft Yahei UI', 'Microsoft Yahei';margin: 0 auto;background: #fff;min-width:320px;}
+img{display:block;border: none;max-width:100%;}
+li{list-style: none;}
+em,i{display:inline-block;vertical-align:middle;font-style:normal;}
+a,button,input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);}
+.fl{float: left;}
+.fr{float: right;}
+.container{width: 92%;margin: 0 auto;}
+.clearfix::after{display: block;content: '.';height: 0;clear: both;visibility: hidden;}
+.TextOver{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.pointer{
+    pointer-events: none;
+}
